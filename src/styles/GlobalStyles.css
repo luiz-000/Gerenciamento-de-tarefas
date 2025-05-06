@@ -1,0 +1,12 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    background-color: rgb(255, 255, 255);
+    font-family: "Poppins", serif;
+    user-select: none;
+    overflow-x: hidden;
+}
