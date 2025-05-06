@@ -1,3 +1,13 @@
 .container {
-    color: red;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    gap: 2rem;
+    padding-top: 2rem;
+
+    width: auto;
+    height: 100vh;
+
+    background-color: rgb(179, 213, 241);
 }
