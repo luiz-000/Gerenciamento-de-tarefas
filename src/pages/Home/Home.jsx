@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { nanoid } from "nanoid";
 
 import style from "./Home.module.css";
 
@@ -10,7 +11,11 @@ const Home = () => {
     const [tarefas, setTarefas] = useState([]);
 
     function salvarTarefa(titulo, descricao) {
-        const novaTarefa = { titulo: titulo, descricao: descricao };
+        const novaTarefa = {
+            id: nanoid(),
+            titulo: titulo,
+            descricao: descricao,
+        };
 
         if (novaTarefa.titulo === "" || novaTarefa.descricao === "") {
             return alert("Preencha os campos");
@@ -18,11 +23,16 @@ const Home = () => {
         setTarefas([...tarefas, novaTarefa]);
     }
 
+    function removerTarefa(id) {
+        const tarefasRestantes = tarefas.filter((tarefa) => tarefa.id !== id);
+        setTarefas(tarefasRestantes);
+    }
+
     return (
         <div className={style.container}>
             <Title />
             <Inputs salvarTarefa={salvarTarefa} />
-            <Tarefas tarefas={tarefas} />
+            <Tarefas tarefas={tarefas} removerTarefa={removerTarefa} />
         </div>
     );
 };
