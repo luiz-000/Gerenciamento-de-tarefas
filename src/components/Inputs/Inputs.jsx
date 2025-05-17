@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 import style from "./Inputs.module.css";
 
 const Inputs = ({ salvarTarefa }) => {
     const [titulo, setTitulo] = useState("");
     const [descricao, setDescricao] = useState("");
+
+    function handleSubmit() {
+        salvarTarefa(titulo, descricao);
+        setTitulo("");
+        setDescricao("");
+    }
 
     function cancelarTarefa() {
         setTitulo("");
@@ -33,10 +39,7 @@ const Inputs = ({ salvarTarefa }) => {
                     Cancelar
                 </button>
 
-                <button
-                    className={style.salvar}
-                    onClick={() => salvarTarefa(titulo, descricao)}
-                >
+                <button className={style.salvar} onClick={handleSubmit}>
                     Salvar
                 </button>
             </div>
