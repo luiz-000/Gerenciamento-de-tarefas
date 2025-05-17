@@ -40,16 +40,18 @@
 
         border: none;
         border-radius: 10px;
-        background-color: rgb(96, 133, 235);
+        background-color: transparent;
 
         font-size: 15px;
         font-weight: 600;
 
+        color: red;
         cursor: pointer;
 
+        transition: transform 0.4s ease;
+
         &:hover {
-            color: white;
-            background-color: rgb(15, 95, 199);
+            transform: rotate(90deg);
         }
     }
 }
