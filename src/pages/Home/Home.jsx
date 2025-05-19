@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 
 import style from "./Home.module.css";
@@ -13,6 +13,39 @@ const Home = () => {
     const [detalhesTarefa, setDetalhesTarefa] = useState(null);
     const [visibleDialog, setVisibleDialog] = useState(false);
 
+    //Uma flag que controla se os dados salvos no localStorage já foram carregados - (libera a gravação no localStorage somente depois de carregar os dados salvos)
+    const [carregouDoStorage, setCarregouDoStorage] = useState(false);
+
+    //Carrega as tarefas salvas no localStorage e adiciona no estado tarefas - (executado somente quando a page é recarregada)
+    useEffect(() => {
+        //Lê as tarefas salvas no localStorage
+        const tarefasSalvas = localStorage.getItem("tarefas");
+
+        //Se conseguiu ler as tarefas salvas
+        if (tarefasSalvas) {
+            try {
+                const converte = JSON.parse(tarefasSalvas);
+
+                if (Array.isArray(converte)) {
+                    //Adiciona as tarefas no estado
+                    setTarefas(converte);
+                }
+            } catch (error) {
+                console.error("Erro ao carregar as tarefas: ", error);
+            }
+        }
+        //O estado carregouDoStorage vira true e isso permite que a instrução do próximo useEffect seja executada
+        setCarregouDoStorage(true);
+    }, []);
+
+    //Armazena as tarefas no localStorage
+    useEffect(() => {
+        //Com isso evita que durante o recarregamento da pagina o estado (tarefas) seja sobreescrito para [] (vazio)
+        if (carregouDoStorage) {
+            localStorage.setItem("tarefas", JSON.stringify(tarefas));
+        }
+    }, [tarefas, carregouDoStorage]);
+
     function salvarTarefa(titulo, descricao) {
         const novaTarefa = {
             id: nanoid(),
@@ -20,10 +53,10 @@ const Home = () => {
             descricao: descricao,
         };
 
-        if (novaTarefa.titulo === "" || novaTarefa.descricao === "") {
+        if (!titulo || !descricao) {
             return alert("Preencha os campos");
         }
-        setTarefas([...tarefas, novaTarefa]);
+        setTarefas((prev) => [...prev, novaTarefa]);
     }
 
     function removerTarefa(id) {
