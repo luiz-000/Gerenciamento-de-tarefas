@@ -33,6 +33,11 @@
             box-shadow: 1px 1px 15px 5px rgb(100, 131, 172);
         }
     }
+}
+
+.buttonsAction {
+    display: flex;
+    gap: 0.2rem;
 
     button {
         width: 2rem;
@@ -45,13 +50,26 @@
         font-size: 15px;
         font-weight: 600;
 
-        color: red;
+        transition: transform 0.4s ease;
+    }
+
+    .buttonDetail {
+        color: rgb(6, 115, 134);
         cursor: pointer;
 
-        transition: transform 0.4s ease;
+        &:hover {
+            transform: rotate(180deg);
+            box-shadow: 1px 1px 15px 5px rgb(6, 115, 134);
+        }
+    }
+
+    .buttonDelete {
+        color: rgb(138, 2, 2);
+        cursor: pointer;
 
         &:hover {
             transform: rotate(90deg);
+            box-shadow: 1px 1px 15px 5px rgb(138, 2, 2);
         }
     }
 }
